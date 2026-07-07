@@ -176,7 +176,7 @@ void NRI::JMP() {
 }
 
 void NRI::JOM() {
-    if (accumulator&(1<<7) != 0) { program_register = memory_address_register; }
+    if (accumulator > 127) { program_register = memory_address_register; }
 }
 
 void NRI::JOZ() {
@@ -204,7 +204,7 @@ void NRI::DCA() {
 }
 
 void NRI::CMA() {
-    //seems annoying do later
+    accumulator = ones_complement(accumulator);
 }
 
 void NRI::RAE() {
@@ -225,6 +225,12 @@ unsigned int NRI::safe_add(unsigned int a, unsigned int b) {
 
 unsigned int NRI::safe_sub(unsigned int a, unsigned int b) {
     unsigned int result = a - b;
+    result = result & 0xFF;
+    return result;
+}
+
+unsigned int NRI::ones_complement(unsigned int x) {
+    unsigned int result = ~x;
     result = result & 0xFF;
     return result;
 }

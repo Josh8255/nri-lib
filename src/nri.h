@@ -79,6 +79,8 @@ class NRI
         //Utilities
         unsigned int safe_add(unsigned int a, unsigned int b);
         unsigned int safe_sub(unsigned int a, unsigned int b);
+
+        unsigned int ones_complement(unsigned int x);
         
 
 };

@@ -1,12 +1,16 @@
 #include "nri.h"
 
-NRI::NRI()
-{
+NRI::NRI() {
     mode = FETCH;
 }
 
-void NRI::clock_cycle()
-{
+void NRI::simulate_instruction() {
+    for(int i = 0; i < MAX_COUNT; i++) {
+        clock_cycle();
+    }
+}
+
+void NRI::clock_cycle() {
     switch(mode) {
         case FETCH:
             fetch();
@@ -35,6 +39,21 @@ void NRI::clock_cycle()
             mode = FETCH;
         }
     }
+} 
+
+void NRI::start() {
+    mode = FETCH;
+    timing_counter = 0;
+}
+
+void NRI::stop() {
+    mode = HALT;
+}
+
+void NRI::load() {
+    mode = FETCH;
+    timing_counter = 0;
+    program_register = 0;
 }
 
 void NRI::set_memory(int* new_memory) {
@@ -59,14 +78,12 @@ unsigned int NRI::get_timing_counter() {
     return timing_counter;
 }
 
-void NRI::fetch()
-{
+void NRI::fetch() {
     memory_address_register = program_register;
     instruction_register = memory[memory_address_register];
 }
 
-void NRI::execute()
-{
+void NRI::execute() {
     int opcode1 = instruction_register>>5;
     int address = instruction_register&0b11111;
     int opcode2 = instruction_register&0b111;

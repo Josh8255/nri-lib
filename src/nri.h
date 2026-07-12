@@ -1,3 +1,8 @@
+/*
+  nri.h - Library for emulating the NRI 832
+  Created 2026-7-12
+*/
+
 #ifndef nri_h
 #define nri_h
 
@@ -16,7 +21,12 @@ class NRI
     public:
         NRI();
 
+        void simulate_instruction();
         void clock_cycle();
+
+        void start();
+        void stop();
+        void load();
         
         void set_memory(int* new_memory);
 

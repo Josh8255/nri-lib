@@ -17,7 +17,7 @@ int main() {
         getch();
         std::cout<<nri->get_program_register()<<std::endl;
         std::cout<<nri->get_accumulator()<<std::endl;
-        for(int i = 0; i < 16; i++) { nri->clock_cycle(); }
+        for(int i = 0; i < 2; i++) { nri->simulate_instruction(); }
     }
 
     return 0;

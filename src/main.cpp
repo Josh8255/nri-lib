@@ -11,14 +11,7 @@ int main() {
     NRI* nri = new NRI();
 
     nri->set_memory(countdown);
-
-    int count = 0;
-    while(nri->get_mode() != HALT) {
-        getch();
-        std::cout<<nri->get_program_register()<<std::endl;
-        std::cout<<nri->get_accumulator()<<std::endl;
-        for(int i = 0; i < 2; i++) { nri->simulate_instruction(); }
-    }
+    
 
     return 0;
 }

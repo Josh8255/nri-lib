@@ -21,19 +21,22 @@ class NRI
     public:
         NRI();
 
-        void simulate_instruction();
         void clock_cycle();
 
-        void start();
-        void stop();
         void load();
+        void start();
+        void reset();
         
         void set_memory(int* new_memory);
+        void set_accumulator(int new_accumulator);
 
-        Mode get_mode();
         unsigned int get_accumulator();
+        unsigned int get_instruction_register();
         unsigned int get_program_register();
-        unsigned int get_timing_counter();
+
+        bool is_overflow();
+        bool is_executing();
+        bool is_running();
     
     private:
         const unsigned int MAX_COUNT = 8;
@@ -52,6 +55,9 @@ class NRI
         unsigned int timing_counter = 0;
 
         unsigned int memory[MEM_SIZE];
+
+        bool running = false;
+        bool overflow = false;
 
         void fetch();
         void execute();

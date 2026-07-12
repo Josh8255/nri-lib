@@ -1,16 +1,19 @@
+/*
+  nri.cpp - Library for emulating the NRI 832
+  Created 2026-7-12
+*/
+
 #include "nri.h"
 
 NRI::NRI() {
     mode = FETCH;
 }
 
-void NRI::simulate_instruction() {
-    for(int i = 0; i < MAX_COUNT; i++) {
-        clock_cycle();
-    }
-}
-
 void NRI::clock_cycle() {
+    if (!running) {
+        return;
+    }
+
     switch(mode) {
         case FETCH:
             fetch();
@@ -39,21 +42,24 @@ void NRI::clock_cycle() {
             mode = FETCH;
         }
     }
-} 
-
-void NRI::start() {
-    mode = FETCH;
-    timing_counter = 0;
 }
 
-void NRI::stop() {
-    mode = HALT;
-}
-
-void NRI::load() {
+void NRI::reset() {
     mode = FETCH;
     timing_counter = 0;
     program_register = 0;
+    instruction_register = 0;
+    accumulator = 0;
+    running = true;
+}
+
+void NRI::start() {
+    if (!running) {
+        running = false;
+    }
+    else {
+        running = true;
+    }
 }
 
 void NRI::set_memory(int* new_memory) {
@@ -62,20 +68,33 @@ void NRI::set_memory(int* new_memory) {
     }
 }
 
-Mode NRI::get_mode() {
-    return mode;
+void NRI::set_accumulator(int new_accumulator) {
+    accumulator = new_accumulator;
 }
 
 unsigned int NRI::get_accumulator() {
     return accumulator;
 }
 
+
+unsigned int NRI::get_instruction_register() {
+    return instruction_register;
+}
+
 unsigned int NRI::get_program_register() {
     return program_register;
 }
 
-unsigned int NRI::get_timing_counter() {
-    return timing_counter;
+bool NRI::is_overflow() {
+    return overflow;
+}
+
+bool NRI::is_executing() {
+    return mode == EXECUTE;
+}
+
+bool NRI::is_running() {
+    return running;
 }
 
 void NRI::fetch() {

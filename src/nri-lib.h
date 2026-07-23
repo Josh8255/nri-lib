@@ -22,7 +22,6 @@ class NRI
         void clock_cycle();
 
         void load();
-        void start();
         void reset();
         
         void set_memory(int new_data, int address);

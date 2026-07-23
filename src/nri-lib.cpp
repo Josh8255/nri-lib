@@ -49,15 +49,6 @@ void NRI::reset() {
     accumulator = 0;
 }
 
-void NRI::start() {
-    if (!running) {
-        running = false;
-    }
-    else {
-        running = true;
-    }
-}
-
 void NRI::set_memory(int new_data, int address) {
     memory[address] = new_data & 0xFF;
 }
